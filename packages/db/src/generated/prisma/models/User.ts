@@ -28,18 +28,21 @@ export type UserMinAggregateOutputType = {
   id: string | null
   username: string | null
   password: string | null
+  name: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   username: string | null
   password: string | null
+  name: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   username: number
   password: number
+  name: number
   _all: number
 }
 
@@ -48,18 +51,21 @@ export type UserMinAggregateInputType = {
   id?: true
   username?: true
   password?: true
+  name?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   username?: true
   password?: true
+  name?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   username?: true
   password?: true
+  name?: true
   _all?: true
 }
 
@@ -139,6 +145,7 @@ export type UserGroupByOutputType = {
   id: string
   username: string
   password: string
+  name: string
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -166,6 +173,7 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   messages?: Prisma.MessageListRelationFilter
   rooms?: Prisma.RoomMemberListRelationFilter
   adminrooms?: Prisma.RoomAdminListRelationFilter
@@ -175,6 +183,7 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   messages?: Prisma.MessageOrderByRelationAggregateInput
   rooms?: Prisma.RoomMemberOrderByRelationAggregateInput
   adminrooms?: Prisma.RoomAdminOrderByRelationAggregateInput
@@ -187,6 +196,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   messages?: Prisma.MessageListRelationFilter
   rooms?: Prisma.RoomMemberListRelationFilter
   adminrooms?: Prisma.RoomAdminListRelationFilter
@@ -196,6 +206,7 @@ export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -208,12 +219,14 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
 export type UserCreateInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageCreateNestedManyWithoutUserInput
   rooms?: Prisma.RoomMemberCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminCreateNestedManyWithoutAdminInput
@@ -223,6 +236,7 @@ export type UserUncheckedCreateInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
   rooms?: Prisma.RoomMemberUncheckedCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminUncheckedCreateNestedManyWithoutAdminInput
@@ -232,6 +246,7 @@ export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUpdateManyWithoutUserNestedInput
   rooms?: Prisma.RoomMemberUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUpdateManyWithoutAdminNestedInput
@@ -241,6 +256,7 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
   rooms?: Prisma.RoomMemberUncheckedUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUncheckedUpdateManyWithoutAdminNestedInput
@@ -250,36 +266,42 @@ export type UserCreateManyInput = {
   id?: string
   username: string
   password: string
+  name?: string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -337,6 +359,7 @@ export type UserCreateWithoutRoomsInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminCreateNestedManyWithoutAdminInput
 }
@@ -345,6 +368,7 @@ export type UserUncheckedCreateWithoutRoomsInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminUncheckedCreateNestedManyWithoutAdminInput
 }
@@ -369,6 +393,7 @@ export type UserUpdateWithoutRoomsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUpdateManyWithoutAdminNestedInput
 }
@@ -377,6 +402,7 @@ export type UserUncheckedUpdateWithoutRoomsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUncheckedUpdateManyWithoutAdminNestedInput
 }
@@ -385,6 +411,7 @@ export type UserCreateWithoutMessagesInput = {
   id?: string
   username: string
   password: string
+  name?: string
   rooms?: Prisma.RoomMemberCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminCreateNestedManyWithoutAdminInput
 }
@@ -393,6 +420,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   id?: string
   username: string
   password: string
+  name?: string
   rooms?: Prisma.RoomMemberUncheckedCreateNestedManyWithoutUserInput
   adminrooms?: Prisma.RoomAdminUncheckedCreateNestedManyWithoutAdminInput
 }
@@ -417,6 +445,7 @@ export type UserUpdateWithoutMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   rooms?: Prisma.RoomMemberUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUpdateManyWithoutAdminNestedInput
 }
@@ -425,6 +454,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   rooms?: Prisma.RoomMemberUncheckedUpdateManyWithoutUserNestedInput
   adminrooms?: Prisma.RoomAdminUncheckedUpdateManyWithoutAdminNestedInput
 }
@@ -433,6 +463,7 @@ export type UserCreateWithoutAdminroomsInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageCreateNestedManyWithoutUserInput
   rooms?: Prisma.RoomMemberCreateNestedManyWithoutUserInput
 }
@@ -441,6 +472,7 @@ export type UserUncheckedCreateWithoutAdminroomsInput = {
   id?: string
   username: string
   password: string
+  name?: string
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
   rooms?: Prisma.RoomMemberUncheckedCreateNestedManyWithoutUserInput
 }
@@ -465,6 +497,7 @@ export type UserUpdateWithoutAdminroomsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUpdateManyWithoutUserNestedInput
   rooms?: Prisma.RoomMemberUpdateManyWithoutUserNestedInput
 }
@@ -473,6 +506,7 @@ export type UserUncheckedUpdateWithoutAdminroomsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   messages?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
   rooms?: Prisma.RoomMemberUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -530,6 +564,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   username?: boolean
   password?: boolean
+  name?: boolean
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
   rooms?: boolean | Prisma.User$roomsArgs<ExtArgs>
   adminrooms?: boolean | Prisma.User$adminroomsArgs<ExtArgs>
@@ -540,21 +575,24 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   username?: boolean
   password?: boolean
+  name?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   username?: boolean
   password?: boolean
+  name?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   username?: boolean
   password?: boolean
+  name?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "password", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "password" | "name", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
   rooms?: boolean | Prisma.User$roomsArgs<ExtArgs>
@@ -575,6 +613,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     username: string
     password: string
+    name: string
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1004,6 +1043,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
 }
     
 

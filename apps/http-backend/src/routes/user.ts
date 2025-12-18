@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { userSigninSchema, userSignupSchema } from "../types/index.js";
 import brcypt from 'bcrypt';
-import { client } from "@repo/db/client";
+import client from "@repo/db/client";
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
+dotenv.config();
 
 export const router = Router();
 
@@ -16,6 +18,7 @@ router.post('/signup', async (req,res) => {
     try {
         const user = await client.user.create({
             data: {
+                name: data.name,
                 username: data.username,
                 password: hashedPassword
             }
@@ -46,7 +49,10 @@ router.post('/signin', async (req,res)=> {
     const result = userResult.data;
 
     try {
-        
+        if(!process.env.JWT_SECRET){
+            return res.status(403).json({message: 'unauthorized'});
+        }
+        const secret=process.env.JWT_SECRET;
         const user = await client.user.findUnique({
             where:{
                 username: result.username
@@ -55,10 +61,6 @@ router.post('/signin', async (req,res)=> {
         if(!user){
             return res.status(404).json({message: "not found"});
         }
-        if(!process.env.JWT_SECRET){
-            return res.status(403).json({message: 'unauthorized'});
-        }
-        const secret=process.env.JWT_SECRET;
 
         const token = jwt.sign(user.id,secret);
         
@@ -73,4 +75,5 @@ router.post('/signin', async (req,res)=> {
             message: "User not found"
         }) 
     }
-})
+});
+
