@@ -16,7 +16,7 @@ export class RoomManager {
         return this.instance;
     } 
 
-    public async createRoom(userId:string, name: string) {
+    public async createRoom(user:User, name: string) {
         
         const room = await client.room.create({
             data: {
@@ -27,12 +27,19 @@ export class RoomManager {
         const roomId = room.id;
         await client.roomAdmin.create({
             data: {
-                adminId: userId,
+                adminId: user.userId,
                 roomId: roomId
             }
         });
+        await client.roomMember.create({
+            data: {
+                userId: user.userId,
+                roomId: roomId
+            }
+        })
+        this.rooms.set(roomId,[user]);
+        
         return roomId;
-
     }
 
     public async addUser(roomId:string,user: User) {
@@ -42,53 +49,60 @@ export class RoomManager {
         let users = this.rooms.get(roomId) ?? [];
         for(let u of users){
             if(u.id === user.id){  //so that the join event agr do baar request krdiya then i will recieve the message twice
-                return;
+                return false;
             }
         }
         try {
-            await client.roomMember.create({
-            data: {
-                userId: user.userId!,
-                roomId: roomId
+            const ifUserExists = await client.roomMember.findFirst({
+                where: {
+                    userId: user.userId,
+                    roomId: roomId
+                }
+            });
+            if(!ifUserExists){
+                await client.roomMember.create({
+                    data: {
+                        userId: user.userId,
+                        roomId: roomId
+                    }
+                })
             }
-            })
         } catch (error) {
             throw new Error('db call failed');    
         }
         this.rooms.set(roomId,[...users,user]);
-        return;
+        return true;
     }
 
     public async leaveUser(roomId:string, userId: string){
         let users = this.rooms.get(roomId) ?? [];
         try {
-            const uid = await client.user.findUnique({
-            where: {
-                username: userId
-            },
-            select: {
-                id: true
-            }
+            const user = await client.roomMember.findFirst({
+                where: {
+                    userId: userId,
+                    roomId: roomId
+                }
             });
-            if(!uid){
+            if(!user){
                 return false;
             }
             await client.roomMember.delete({
                 where: {
-                    id: uid.id
+                    id: user?.id
                 }
             });
+            users = users.filter((u) => userId !== u.userId); //and if i am leaving from a tab for eg toh mera vhi waala connection should be closed....
+            this.rooms.set(roomId, users);
+            return true;
         } catch (error) {
             return false;
         } 
-        users = users.filter((u) => userId !== u.userId); //and if i am leaving from a tab for eg toh mera vhi waala connection should be closed....
-        this.rooms.set(roomId, users);
-        return true;
     }
 
-    public async removeUser(roomId:string, userId: string, adminId: string){
+    public async removeUser(roomId:string, username: string, adminId: string){
 
-        let users = this.rooms.get(roomId) ?? [];
+        try {
+            let users = this.rooms.get(roomId) ?? [];
         const id = await client.roomAdmin.findFirst({
             where: {
                 adminId: adminId,
@@ -98,9 +112,17 @@ export class RoomManager {
         if(!id){
             return false;
         }
+        const user = await client.user.findUnique({
+            where:{
+                username: username
+            }
+        })
+        if(!user){
+            return false;
+        }
         const rem = await client.roomMember.findFirst({
             where:{
-                userId: userId,
+                userId: user?.id,
                 roomId: roomId
             },
             select: {
@@ -112,23 +134,27 @@ export class RoomManager {
         }
         await client.roomMember.delete({
             where: {
-                id: rem?.id
+                id: rem.id
             }
         });
         users = users.filter((u) => {
-            userId !== u.userId  //if admin is removing me so mere jitne bhi connections h all of them should be removed from the roomId....
-            u.ws.close()
+            if(user.id == u.userId){
+                u.ws.close();
+            }  //if admin is removing me so mere jitne bhi connections h all of them should be removed from the roomId....
         });
         this.rooms.set(roomId, users);
-        return true; 
+        return true;
+        } catch (error) {
+            return false;
+        } 
     }
 
-    public async messageUser(roomId: string, userId: string, message: string){
+    public async messageUser(roomId: string,user: User, message: string){
         try {
             const mess = await client.message.create({
                 data: {
                     roomId: roomId,
-                    userId: userId,
+                    userId: user.userId,
                     message: message
                 }
             });

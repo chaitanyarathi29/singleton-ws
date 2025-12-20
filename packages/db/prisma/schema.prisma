@@ -24,9 +24,9 @@ model User {
 }
 
 model RoomMember {
-  id        String          @unique     @default(uuid())
+  id        String          @unique      @id      @default(uuid())
   roomId    String
-  userId    String
+  userId    String          
   user      User            @relation( fields: [userId], references: [id])
   room      Room            @relation( fields: [roomId], references: [id])     
 }
@@ -41,7 +41,7 @@ model Message {
 }
 
 model RoomAdmin {
-  id            String      @unique     @default(uuid())
+  id            String      @unique      @id       @default(uuid())
   adminId       String
   roomId        String
   admin         User        @relation( fields: [adminId], references: [id])

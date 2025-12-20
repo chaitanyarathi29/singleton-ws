@@ -187,7 +187,7 @@ export type RoomAdminWhereUniqueInput = Prisma.AtLeast<{
   roomId?: Prisma.StringFilter<"RoomAdmin"> | string
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
-}, "id">
+}, "id" | "id">
 
 export type RoomAdminOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
